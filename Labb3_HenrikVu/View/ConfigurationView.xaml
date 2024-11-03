@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="Labb3_HenrikVu.View.ConfigurationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Labb3_HenrikVu.View" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
+             xmlns:converters="clr-namespace:Labb3_HenrikVu.Converters"
+             DataContext="{Binding ConfigurationViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <!--AddRemoveEditQuestionPack-->
+        <Grid>
+            
+            <Label Content="{Binding ActivePack.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   FontWeight="{StaticResource FontWeight}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" Margin="1,0,0,0"/>
+
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+
+                <Button x:Name="EditSettings" 
+                        Margin="0 5 5 5"
+                        IsEnabled="{Binding ListOfQuestionPacks, Converter={StaticResource BooleanToIsTargetNullCorverter}}"
+                        Content="{fa:Icon barsstaggered}"
+                        Click="Button_Click"
+                        Command="{Binding EditPackSettingsOnCommand}"/>
+
+                <Button Margin="0 5 5 5" 
+                        Content="{fa:Icon plus}"
+                        IsEnabled="{Binding ListOfQuestionPacks, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToIsTargetNullCorverter}}"
+                        Command="{Binding AddQuestionOnCommand}"/>
+
+                <Button Margin="0 5 5 5"
+                        Content="{fa:Icon minus}"
+                        IsEnabled="{Binding ActivePack.Questions, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource BooleanToIsTargetNullCorverter}}"
+                        Command="{Binding RemoveQuestionOnCommand}">
+                </Button>
+                
+            </StackPanel>
+        </Grid>
+
+        <!--QuestionPackListBox-->
+        <ListBox x:Name="ListBox" 
+                 Grid.Row="1"
+                 Grid.RowSpan="5"
+                 Margin="5 0 5 5"
+                 VerticalContentAlignment="Stretch"
+                 HorizontalContentAlignment="Stretch"
+                 SelectedItem="{Binding SelectedQuestion}"
+                 ItemsSource="{Binding ActivePack.Questions}">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    
+                    <StackPanel>
+                        <TextBlock FontWeight="{StaticResource FontWeight}"
+                                   Text="Question:" />
+                        <TextBlock Text="{Binding Query}" />
+                    </StackPanel>
+                    
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+        <!--Questions&Answers-->
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Margin="20 0"
+              Visibility="{Binding ElementName=ListBox, Path=SelectedItem, Converter={StaticResource SelectedItemToVisibilityConverter}}">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.4*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--Questions-->
+            <Grid>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="0"
+                       Margin="0"
+                       Padding="5 0 0 5"
+                       FontWeight="{StaticResource FontWeight}"
+                       Content="Question"></Label>
+                <TextBox Margin="3 0"
+                         Grid.Row="1"
+                         TextWrapping="Wrap"
+                         Text="{Binding SelectedQuestion.Query, UpdateSourceTrigger=PropertyChanged}"/>
+                
+            </Grid>
+
+            <!--Answers-->
+            <Grid Grid.Row="1"
+                  Margin="0 30">
+
+                <StackPanel DataContext="{Binding SelectedQuestion}">
+
+                    <StackPanel Margin="0 10 0 0">
+                        <Label FontWeight="{StaticResource FontWeight}"
+                               Content="Correct Answer:" />
+                        <TextBox Margin="3 0" Text="{Binding CorrectAnswer, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0 10 0 0">
+                        <Label Content="First Incorrect Answer" 
+                               FontWeight="{StaticResource FontWeight}"/>
+                        <TextBox Margin="3 0" Text="{Binding IncorrectAnswers[0], UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0 10 0 0">
+                        <Label Content="Second Incorrect Answer" 
+                               FontWeight="{StaticResource FontWeight}"/>
+                        <TextBox Margin="3 0" Text="{Binding IncorrectAnswers[1], UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0 10 0 0">
+                        <Label Content="Third Incorrect Answer" 
+                               FontWeight="{StaticResource FontWeight}"/>
+                        <TextBox Margin="3 0" Text="{Binding IncorrectAnswers[2], UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

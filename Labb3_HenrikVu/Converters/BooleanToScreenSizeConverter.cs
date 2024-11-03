@@ -1,0 +1,34 @@
+﻿using Labb3_HenrikVu.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+
+namespace Labb3_HenrikVu.Converters
+{
+    class BooleanToScreenSizeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var isChecked = (bool)value;
+            if(isChecked == true)
+            {
+                return WindowState.Maximized;
+            }
+            else
+            {
+                return WindowState.Normal;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+}

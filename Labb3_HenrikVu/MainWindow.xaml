@@ -1,0 +1,31 @@
+﻿<Window x:Class="Labb3_HenrikVu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:local="clr-namespace:Labb3_HenrikVu" xmlns:view="clr-namespace:Labb3_HenrikVu.View"
+        xmlns:converters="clr-namespace:Labb3_HenrikVu.Converters"
+        mc:Ignorable="d"
+        Title="MainWindow" MinHeight="500" Width="850" MinWidth="450" WindowStartupLocation="CenterScreen" Icon="View/Icons/letter-q.ico"
+        WindowState="{Binding ConfigurationViewModel.IsFullScreen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToScreenSizeConverter}}">
+    <Window.InputBindings>
+        <KeyBinding Key="U" Modifiers="Ctrl" Command="{Binding PlayerViewModel.UpdateButtonOnCommand}"/>
+    </Window.InputBindings>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <view:MenuView />
+
+        <view:ConfigurationView Grid.Row="1" 
+                                Visibility="{Binding KeepActiveWindow, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <view:PlayerView Grid.Row="1"
+                         Visibility="{Binding KeepActiveWindow, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+    </Grid>
+</Window>

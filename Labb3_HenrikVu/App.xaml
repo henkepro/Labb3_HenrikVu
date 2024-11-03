@@ -1,0 +1,24 @@
+﻿<Application x:Class="Labb3_HenrikVu.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:model="clr-namespace:Labb3_HenrikVu.Model" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:Labb3_HenrikVu" xmlns:converters="clr-namespace:Labb3_HenrikVu.Converters" xmlns:view="clr-namespace:Labb3_HenrikVu.View"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <converters:BooleanToScreenSizeConverter x:Key="BooleanToScreenSizeConverter"/>
+        <FontWeight x:Key="FontWeight">Bold</FontWeight>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanToIsTargetNullCorverter x:Key="BooleanToIsTargetNullCorverter" />
+        <converters:SelectedItemToVisibilityConverter x:Key="SelectedItemToVisibilityConverter"/>
+        <SolidColorBrush Color="Transparent" x:Key="_transparent"/>
+        <SolidColorBrush Color="LightGray" x:Key="_menuColor"/>
+        <converters:DoubleValuesToBooleanConverter x:Key="DoubleValuesToBooleanConverter"/>
+
+        <ObjectDataProvider x:Key="DifficultyEnumValues" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="model:Difficulty" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+    </Application.Resources>
+</Application>

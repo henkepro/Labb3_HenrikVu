@@ -1,0 +1,63 @@
+﻿<Window x:Class="Labb3_HenrikVu.View.EditPackView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Labb3_HenrikVu.View"
+        mc:Ignorable="d"
+        Title="PackSettings" Height="190" Width="190" ResizeMode="NoResize" Icon="Icons/letter-q.ico"
+        WindowStartupLocation="CenterScreen">
+    <Grid x:Name="Grid1" Margin="10 5">
+        <StackPanel>
+            <Grid>
+
+                <StackPanel Grid.Column="1">
+
+                    <Label Margin="0 5"
+                           Padding="0"
+                           FontWeight="{StaticResource FontWeight}"
+                           Content="Pack Name"/>
+
+                    <TextBox Padding="3 0"
+                             Text="{Binding ConfigurationViewModel.ActivePack.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Label Margin="0 5"
+                           Padding="0"
+                           FontWeight="{StaticResource FontWeight}"
+                           Content="Difficulty"/>
+
+                    <ComboBox ItemsSource="{Binding Source={StaticResource DifficultyEnumValues}}"
+                              SelectedItem="{Binding ConfigurationViewModel.ActivePack.Difficulty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    
+                    </ComboBox>
+
+                    <Grid>
+                        <Label Margin="0 5"
+                               Padding="0"
+                               FontWeight="{StaticResource FontWeight}"
+                               Content="Time limit:"/>
+
+                        <Label HorizontalAlignment="Right"
+                               FontWeight="{StaticResource FontWeight}"
+                               Content="{Binding ElementName=TimeSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+
+                    <Slider x:Name="TimeSlider" Value="{Binding ConfigurationViewModel.ActivePack.TimeLimitInSeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Minimum="0"
+                            Maximum="120"
+                            TickFrequency="5"
+                            IsSnapToTickEnabled="True"
+                            TickPlacement="BottomRight"
+                            IsSelectionRangeEnabled="True"/>
+
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
