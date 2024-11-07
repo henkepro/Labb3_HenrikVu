@@ -31,10 +31,10 @@
             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Right">
 
-                <Button x:Name="EditSettings" 
+                <Button x:Name="_EditSettings" 
                         Margin="0 5 5 5"
                         IsEnabled="{Binding ListOfQuestionPacks, Converter={StaticResource BooleanToIsTargetNullCorverter}}"
-                        Content="{fa:Icon barsstaggered}"
+                        Content="{fa:Icon sliders}"
                         Click="Button_Click"
                         Command="{Binding EditPackSettingsOnCommand}"/>
 

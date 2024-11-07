@@ -1,4 +1,5 @@
-﻿using Labb3_HenrikVu.ViewModel;
+﻿using Labb3_HenrikVu.Command;
+using Labb3_HenrikVu.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -47,9 +48,13 @@ namespace Labb3_HenrikVu.View
 
         private void PlayWindow_Click(object sender, RoutedEventArgs e)
         {
-            PlayWindow.IsEnabled = !PlayWindow.IsEnabled;
-            EditWindow.IsEnabled = !PlayWindow.IsEnabled;
+            EditWindow.IsEnabled = !EditWindow.IsEnabled;
             HiddenBoolean.IsChecked = !HiddenBoolean.IsChecked;
+        }
+
+        private void TestingClick(object sender, RoutedEventArgs e)
+        {
+            //((APIQuestionsPackViewModel)DataContext).LoadJsonFileIfNotNull();
         }
     }   
 }

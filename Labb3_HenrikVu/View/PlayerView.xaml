@@ -9,7 +9,6 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid Visibility="{Binding IsNotLastQuestion, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <!--<Grid Visibility="Collapsed">-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -18,15 +17,18 @@
             </Grid.RowDefinitions>
 
             <Label Content="{Binding Timer, UpdateSourceTrigger=PropertyChanged}"
+                   FontWeight="{StaticResource FontWeight}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Right"/>
 
             <Label Content="{Binding ActivePack.Questions[0].Query, TargetNullValue='No Question', FallbackValue='No Question'}"
-                            Grid.Row="1"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"/>
+                   FontWeight="{StaticResource FontWeight}"         
+                   Grid.Row="1"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
 
             <Label Content="{Binding ActivePackQuestionCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   FontWeight="{StaticResource FontWeight}"
                    Grid.Row="2"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"/>
@@ -49,112 +51,130 @@
                         Grid.Column="0"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
                         Margin="30"
-                        Click="Button_Click0"
+                        Click="Button_Click"
+                        Tag="0"
                         Command="{Binding SelectAnswerOnCommand, UpdateSourceTrigger=PropertyChanged}">
-
-                    <Grid>
-                        <Image Source="Icons/incorrect.png"
-                                           Visibility="{Binding Button00, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-                        <Image Source="Icons/correct.png"
-                                           Visibility="{Binding Button0, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-
-                        <TextBlock Text="{Binding RandomizedAnswerList[0], UpdateSourceTrigger=PropertyChanged}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center">
-                        </TextBlock>
-                    </Grid>
-
+                    <TextBlock Text="{Binding RandomizedAnswerList[0], UpdateSourceTrigger=PropertyChanged}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
                 </Button>
+                <Image Source="Icons/incorrect.png"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button00, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       />
+
+                <Image Source="Icons/correct.png"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button0, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                       />
 
                 <Button Grid.Row="1"
                         Grid.Column="0"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
                         Margin="30"
-                        Click="Button_Click1"
+                        Click="Button_Click"
+                        Tag="1"
                         Command="{Binding SelectAnswerOnCommand, UpdateSourceTrigger=PropertyChanged}">
-
-                    <Grid>
-                        <Image Source="Icons/incorrect.png"
-                                           Visibility="{Binding Button11, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-                        <Image Source="Icons/correct.png"
-                                           Visibility="{Binding Button1, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-
-                        <TextBlock Text="{Binding RandomizedAnswerList[1], UpdateSourceTrigger=PropertyChanged}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center">
-                        </TextBlock>
-                    </Grid>
-
+                    <TextBlock Text="{Binding RandomizedAnswerList[1], UpdateSourceTrigger=PropertyChanged}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
                 </Button>
+                <Image Source="Icons/incorrect.png"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button11, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       />
+
+                <Image Source="Icons/correct.png"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button1, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                       />
 
                 <Button Grid.Row="0"
                         Grid.Column="1"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
                         Margin="30"
-                        Click="Button_Click2"
+                        Click="Button_Click"
+                        Tag="2"
                         Command="{Binding SelectAnswerOnCommand, UpdateSourceTrigger=PropertyChanged}">
-
-                    <Grid>
-                        <Image Source="Icons/incorrect.png"
-                                           Visibility="{Binding Button22, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-                        <Image Source="Icons/correct.png"
-                                           Visibility="{Binding Button2, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-
-                        <TextBlock Text="{Binding RandomizedAnswerList[2], UpdateSourceTrigger=PropertyChanged}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center">
-                        </TextBlock>
-                    </Grid>
+                    <TextBlock Text="{Binding RandomizedAnswerList[2], UpdateSourceTrigger=PropertyChanged}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
                 </Button>
+                <Image Source="Icons/incorrect.png"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button22, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       />
+
+                <Image Source="Icons/correct.png"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button2, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                       />
+
 
                 <Button Grid.Row="1"
                         Grid.Column="1"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
                         Margin="30"
-                        Click="Button_Click3"
+                        Click="Button_Click"
+                        Tag="3"
                         Command="{Binding SelectAnswerOnCommand, UpdateSourceTrigger=PropertyChanged}">
-
-                    <Grid>
-                        <Image Source="Icons/incorrect.png"
-                                           Visibility="{Binding Button33, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-                        <Image Source="Icons/correct.png"
-                                           Visibility="{Binding Button3, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           VerticalAlignment="Top"
-                                           HorizontalAlignment="Left" Margin="-168,-64,0,0" Height="38"/>
-
-                        <TextBlock Text="{Binding RandomizedAnswerList[3], UpdateSourceTrigger=PropertyChanged}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center">
-                        </TextBlock>
-                    </Grid>
-
+                    <TextBlock Text="{Binding RandomizedAnswerList[3], UpdateSourceTrigger=PropertyChanged}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
                 </Button>
+                <Image Source="Icons/incorrect.png"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button33, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       />
+
+                <Image Source="Icons/correct.png"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Width="50"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="30"
+                       Visibility="{Binding Button3, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                       />
 
             </Grid>
         </Grid>
@@ -163,18 +183,27 @@
             <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Center">
 
-                <Label Content="Complete!"/>
+                <Label Content="Complete!"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center"
+                       FontWeight="{StaticResource FontWeight}"/>
 
                 <Label Content="{Binding ActivePackCorrectAnswers, UpdateSourceTrigger=PropertyChanged}"
-                   Grid.Row="2"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                       FontWeight="{StaticResource FontWeight}"
+                       Grid.Row="2"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
 
                 <Button Content="Restart"
+                        Width="50"
+                        Height="25"
+                        FontWeight="{StaticResource FontWeight}"
                         Command="{Binding PlayQuestionsOnCommand}"/>
 
             </StackPanel>
-            
+
         </Grid>
     </Grid>
 </UserControl>

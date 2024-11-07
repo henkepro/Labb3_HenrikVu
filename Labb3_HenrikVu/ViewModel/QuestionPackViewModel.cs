@@ -18,6 +18,11 @@ namespace Labb3_HenrikVu.ViewModel
             this.model = model;
             this.Questions = new ObservableCollection<Question>(model.Questions);
         }
+        public QuestionPackViewModel()
+        {
+            model = new QuestionPack();
+            Questions = new ObservableCollection<Question>();
+        }
         public string Name
         {
             get => model.Name;

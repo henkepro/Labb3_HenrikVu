@@ -25,38 +25,13 @@ namespace Labb3_HenrikVu.View
         {
             InitializeComponent();
         }
-        private void Button_Click0(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             if(sender is Button button)
             {
-                button.CommandParameter = ((PlayerViewModel) DataContext).RandomizedAnswerList[0];
+                int buttonIndex = int.Parse(button.Tag.ToString());
+                button.CommandParameter = ((PlayerViewModel)DataContext).RandomizedAnswerList[buttonIndex];
             }
-        }
-        private void Button_Click1(object sender, RoutedEventArgs e)
-        {
-            if(sender is Button button)
-            {
-                button.CommandParameter = ((PlayerViewModel) DataContext).RandomizedAnswerList[1];
-            }
-        }
-        private void Button_Click2(object sender, RoutedEventArgs e)
-        {
-            if(sender is Button button)
-            {
-                button.CommandParameter = ((PlayerViewModel) DataContext).RandomizedAnswerList[2];
-            }
-        }
-        private void Button_Click3(object sender, RoutedEventArgs e)
-        {
-            if(sender is Button button)
-            {
-                button.CommandParameter = ((PlayerViewModel) DataContext).RandomizedAnswerList[3];
-            }
-        }
-
-        private void ButtonRestart_Click(object sender, RoutedEventArgs e)
-        {
-            //((PlayerViewModel) DataContext).RandomizedAnswerList[3];
         }
     }
 }

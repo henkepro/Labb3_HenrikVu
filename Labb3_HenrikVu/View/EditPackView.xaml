@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="PackSettings" Height="190" Width="190" ResizeMode="NoResize" Icon="Icons/letter-q.ico"
         WindowStartupLocation="CenterScreen">
+    <Window.InputBindings>
+        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding ConfigurationViewModel.UpdateButtonOnCommand}"/>
+    </Window.InputBindings>
     <Grid x:Name="Grid1" Margin="10 5">
         <StackPanel>
             <Grid>

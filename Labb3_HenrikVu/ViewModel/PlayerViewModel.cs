@@ -16,32 +16,33 @@ namespace Labb3_HenrikVu.ViewModel
     internal class PlayerViewModel : ViewModelBase
     {
         private readonly MainWindowViewModel? mainWindowViewModel;
-        private DispatcherTimer dispatchTimer;
+        public DispatcherTimer dispatchTimer;
         public QuestionPackViewModel ActivePack { get => mainWindowViewModel.ActivePack; }
-        public DelegateCommand UpdateButtonOnCommand { get; }
         public DelegateCommand PlayQuestionsOnCommand { get; }
         public DelegateCommand SelectAnswerOnCommand { get; }
-
+        public ObservableCollection<string> RandomizedAnswerList { get; set; }
         private int temptimer = 30;
         private int questionIndex = 1;
         private int correctQuestionIndex = 0;
         private int _timer;
-        private string _activePackQuestionCount;
         private bool _keepActiveWindow = false;
-        private bool _button0 = false;
-        private bool _button1 = false;
-        private bool _button2 = false;
-        private bool _button3 = false;
-        private bool _button00 = false;
-        private bool _button11 = false;
-        private bool _button22 = false;
-        private bool _button33 = false;
-        private bool waitForNextQuestion = false;
-        private bool _isQuestionSelected = false;
-        private string _activePackCorrectAnswers;
+        private string _activePackCorrectAnswers; private string _activePackQuestionCount;
+        private bool _button0 = false; private bool _button1 = false;
+        private bool _button2 = false; private bool _button3 = false;
+        private bool _button00 = false; private bool _button11 = false;
+        private bool _button22 = false; private bool _button33 = false;
+        private bool waitForNextQuestion = false; private bool _isQuestionSelected = false;
+        private bool hasCorrectAnswer = false; private bool Timesup = false;
         private TaskCompletionSource<bool> selectAnswerCompletionSource;
-        public bool IsLastQuestion { get; set; } = true;
-        public bool IsNotLastQuestion { get; set; } = false;
+        public bool IsLastQuestion { get; set; } = true; public bool IsNotLastQuestion { get; set; } = false;
+        public bool Button0 { get => _button0; set { _button0 = value; RaisePropertyChanged(); } }
+        public bool Button1 { get => _button1; set { _button1 = value; RaisePropertyChanged(); } }
+        public bool Button2 { get => _button2; set { _button2 = value; RaisePropertyChanged(); } }
+        public bool Button3 { get => _button3; set { _button3 = value; RaisePropertyChanged(); } }
+        public bool Button00 { get => _button00; set { _button00 = value; RaisePropertyChanged(); } }
+        public bool Button11 { get => _button11; set { _button11 = value; RaisePropertyChanged(); } }
+        public bool Button22 { get => _button22; set { _button22 = value; RaisePropertyChanged(); } }
+        public bool Button33 { get => _button33; set { _button33 = value; RaisePropertyChanged(); } }
         public string ActivePackQuestionCount
         {
             get
@@ -60,7 +61,7 @@ namespace Labb3_HenrikVu.ViewModel
         {
             get
             {
-                return $"{correctQuestionIndex}/{mainWindowViewModel.ActivePack.Questions.Count.ToString()}";
+                return $"You got {correctQuestionIndex}/{mainWindowViewModel.ActivePack.Questions.Count.ToString()} correct!";
             }
             set
             {
@@ -105,30 +106,23 @@ namespace Labb3_HenrikVu.ViewModel
             dispatchTimer.Interval = TimeSpan.FromSeconds(1);
             dispatchTimer.Tick += Timer_Tick;
 
-            UpdateButtonOnCommand = new DelegateCommand(UpdateData);
             PlayQuestionsOnCommand = new DelegateCommand(PlayQuestions);
             SelectAnswerOnCommand = new DelegateCommand(SelectAnswer, CheckAnswers);
 
-            RandomizeSelectedQuestions();
+            if(ActivePack.Questions.Count != 0)
+            {
+                RandomizeSelectedQuestions();
+            }
             ResetButtonBooleans();
             ResetTimer();
             RaisePropertyChanged("ActivePack");
         }
-        public bool Button0 { get => _button0; set { _button0 = value; RaisePropertyChanged(); } }
-        public bool Button1 { get => _button1; set { _button1 = value; RaisePropertyChanged(); } }
-        public bool Button2 { get => _button2; set { _button2 = value; RaisePropertyChanged(); } }
-        public bool Button3 { get => _button3; set { _button3 = value; RaisePropertyChanged(); } }
-        public bool Button00 { get => _button00; set { _button00 = value; RaisePropertyChanged(); } }
-        public bool Button11 { get => _button11; set { _button11 = value; RaisePropertyChanged(); } }
-        public bool Button22 { get => _button22; set { _button22 = value; RaisePropertyChanged(); } }
-        public bool Button33 { get => _button33; set { _button33 = value; RaisePropertyChanged(); } }
         public void ResetButtonBooleans()
         {
             Button0 = false; Button1 = false; Button2 = false; Button3 = false;
             Button00 = false; Button11 = false; Button22 = false; Button33 = false;
             _isQuestionSelected = false;
         }
-        bool hasCorrectAnswer = false;
         private bool CheckAnswers(object? arg)
         {
             if(arg is string && waitForNextQuestion == false || Timesup)
@@ -183,8 +177,6 @@ namespace Labb3_HenrikVu.ViewModel
             }
             return true;
         }
-
-        public ObservableCollection<string> RandomizedAnswerList { get; set; }
         public void RandomizeSelectedQuestions()
         {
             Random random = new Random();
@@ -195,13 +187,11 @@ namespace Labb3_HenrikVu.ViewModel
                 SelectedQuestion.IncorrectAnswers[1],
                 SelectedQuestion.IncorrectAnswers[2]
             };
-
             tempList = tempList.OrderBy(x => random.Next()).ToList();
             RandomizedAnswerList = new ObservableCollection<string>(tempList);
 
             RaisePropertyChanged("RandomizedAnswerList");
         }
-
         public bool HandleLastQuestion
         {
             set 
@@ -212,7 +202,6 @@ namespace Labb3_HenrikVu.ViewModel
                 RaisePropertyChanged("IsNotLastQuestion");
             }
         }
-        bool Timesup = false;
         private async void SelectAnswer(object obj)
         {
             if(waitForNextQuestion == false || Timesup)
@@ -251,6 +240,7 @@ namespace Labb3_HenrikVu.ViewModel
 
         private void PlayQuestions(object obj)
         {
+            mainWindowViewModel.CanClickPlay = false;
             ResetButtonBooleans();
             if(KeepActiveWindow == false)
             {
@@ -272,14 +262,9 @@ namespace Labb3_HenrikVu.ViewModel
             RaisePropertySpam();
         }
 
-        private void UpdateData(object obj)
-        {
-            UpdateButtonOnCommand.RaiseCanExecuteChanged();
-        }
         private async void Timer_Tick(object? sender, EventArgs e)
         {
             bool canStopTimer = true;
-            if(Timer > 5) Timer -= 4;
             if(Timer > 0 && Timesup == false)
             {
                 Timer--;

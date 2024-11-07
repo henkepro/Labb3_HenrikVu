@@ -6,13 +6,11 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <converters:BooleanToScreenSizeConverter x:Key="BooleanToScreenSizeConverter"/>
-        <FontWeight x:Key="FontWeight">Bold</FontWeight>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:BooleanToIsTargetNullCorverter x:Key="BooleanToIsTargetNullCorverter" />
         <converters:SelectedItemToVisibilityConverter x:Key="SelectedItemToVisibilityConverter"/>
-        <SolidColorBrush Color="Transparent" x:Key="_transparent"/>
-        <SolidColorBrush Color="LightGray" x:Key="_menuColor"/>
         <converters:DoubleValuesToBooleanConverter x:Key="DoubleValuesToBooleanConverter"/>
+        <FontWeight x:Key="FontWeight">Bold</FontWeight>
 
         <ObjectDataProvider x:Key="DifficultyEnumValues" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>

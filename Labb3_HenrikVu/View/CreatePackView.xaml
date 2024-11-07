@@ -16,8 +16,7 @@
                            Padding="0"
                            FontWeight="{StaticResource FontWeight}">Pack Name:</Label>
 
-                    <TextBox x:Name="TempoName" 
-                             Padding="3 0"
+                    <TextBox Padding="3 0"
                              Text="{Binding ConfigurationViewModel.TargetReference.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              />
 
