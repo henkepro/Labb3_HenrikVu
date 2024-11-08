@@ -21,6 +21,7 @@ namespace Labb3_HenrikVu.ViewModel
         public PlayerViewModel PlayerViewModel { get; set; }
         private QuestionPackViewModel? _activePack;
         private Question _selectedQuestion;
+        public bool isLoadingFile = false;
         public bool CanClickPlay { get => ConfigurationViewModel.CanClickPlay; set => ConfigurationViewModel.CanClickPlay = value; }
         public Question SelectedQuestion
         {
@@ -52,7 +53,6 @@ namespace Labb3_HenrikVu.ViewModel
             ConfigurationViewModel = new ConfigurationViewModel(this);
             PlayerViewModel = new PlayerViewModel(this);
         }
-        public bool isLoadingFile = false;
         private async Task LoadJsonFileIfNotNull()
         {
             string path = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Labb3_HenrikVu\\ListOfActivePacks.json";

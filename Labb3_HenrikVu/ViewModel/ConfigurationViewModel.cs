@@ -139,9 +139,8 @@ namespace Labb3_HenrikVu.ViewModel
                     string json = JsonSerializer.Serialize(ListOfQuestionPacks, options);
                     await File.WriteAllTextAsync(path, json);
                 }
-                else if(!File.Exists(path))
+                else
                 {
-                    Debug.WriteLine("Saving Json Complete");
                     var tempListOfQuestionPacks = new ObservableCollection<QuestionPackViewModel>();
                     var tempPack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
                     tempPack.Questions.Add(new Question("Sample Question"));
