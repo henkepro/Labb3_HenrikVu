@@ -8,7 +8,7 @@ namespace Labb3_HenrikVu.Model
 {
     internal class Question
     {
-        public Question(string query = "My Question", string correctAnswer = "Correct1", string incorrectAnswer1 = "Incorrect1", string incorrectAnswer2 = "Incorrect2", string incorrectAnswer3 = "Incorrect3")
+        public Question(string query = "My Question", string correctAnswer = "", string incorrectAnswer1 = "", string incorrectAnswer2 = "", string incorrectAnswer3 = "")
         {
             Query = query;
             CorrectAnswer = correctAnswer;

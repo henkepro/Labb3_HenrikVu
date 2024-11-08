@@ -39,6 +39,7 @@ namespace Labb3_HenrikVu.ViewModel
         private bool _canClickPlay = true;
         private bool _isFullScreen;
         private bool _keepActiveWindow = true;
+        private DispatcherTimer dispatchTimer;
         public Question SelectedQuestion 
         {
             get => mainWindowViewModel.SelectedQuestion; 
@@ -148,7 +149,6 @@ namespace Labb3_HenrikVu.ViewModel
             }
         }
 
-        private DispatcherTimer dispatchTimer;
         private void EditQuestions(object obj)
         {
             mainWindowViewModel.ToggleSwapActiveWindow();
