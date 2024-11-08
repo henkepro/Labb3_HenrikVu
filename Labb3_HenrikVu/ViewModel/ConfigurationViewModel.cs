@@ -123,7 +123,6 @@ namespace Labb3_HenrikVu.ViewModel
         {
             if(mainWindowViewModel.isLoadingFile == false)
             {
-            Debug.WriteLine("Saved Package to Json");
                 var options = new JsonSerializerOptions()
                 {
                     WriteIndented = true,
@@ -224,10 +223,6 @@ namespace Labb3_HenrikVu.ViewModel
             }
 
             CanClickPlay = true;
-            for(int i = 0; i < 10000; i++)
-            {
-                ActivePack.Questions.Add(new Question());
-            }
             SelectedQuestion = ActivePack.Questions.LastOrDefault();
 
             RaisePropertySpam();
