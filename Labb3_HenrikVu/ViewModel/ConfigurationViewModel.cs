@@ -139,11 +139,14 @@ namespace Labb3_HenrikVu.ViewModel
                     string json = JsonSerializer.Serialize(ListOfQuestionPacks, options);
                     await File.WriteAllTextAsync(path, json);
                 }
-                else
+                else if(!File.Exists(path))
                 {
+                    Debug.WriteLine("Saving Json Complete");
+                    var tempListOfQuestionPacks = new ObservableCollection<QuestionPackViewModel>();
                     var tempPack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
                     tempPack.Questions.Add(new Question("Sample Question"));
-                    string json = JsonSerializer.Serialize(tempPack, options);
+                    tempListOfQuestionPacks.Add(tempPack);
+                    string json = JsonSerializer.Serialize(tempListOfQuestionPacks, options);
                     await File.WriteAllTextAsync(path, json);
                 }
             }
