@@ -59,7 +59,6 @@ namespace Labb3_HenrikVu.ViewModel
             if(File.Exists(path))
             {
                 isLoadingFile = true;
-                Debug.WriteLine("Json File Loading");
                 string myJson = await File.ReadAllTextAsync(path);
                 var tempListOfPacks = JsonSerializer.Deserialize<ObservableCollection<QuestionPackViewModel>>(myJson);
                 ListOfQuestionPacks = tempListOfPacks;
@@ -67,7 +66,7 @@ namespace Labb3_HenrikVu.ViewModel
                 ActivePack = ListOfQuestionPacks.LastOrDefault();
                 SelectedQuestion = ActivePack.Questions.LastOrDefault();
 
-                Debug.WriteLine("Json File Loaded");
+                Debug.WriteLine("Json File Succesfully loaded");
                 RaisePropertyChanged("SelectedQuestion");
                 RaisePropertyChanged("ActivePack");
                 RaisePropertyChanged("ListOfQuestionPacks");
