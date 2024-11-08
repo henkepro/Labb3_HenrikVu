@@ -3,6 +3,7 @@ using Labb3_HenrikVu.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -42,32 +43,36 @@ namespace Labb3_HenrikVu.ViewModel
 		}
         public MainWindowViewModel()
         {
+            ListOfQuestionPacks = new ObservableCollection<QuestionPackViewModel>();
+            ActivePack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
+            ActivePack.Questions.Add(new Question("Sample Question"));
+            ListOfQuestionPacks.Add(ActivePack);
+            SelectedQuestion = ActivePack.Questions.LastOrDefault();
             LoadJsonFileIfNotNull();
             ConfigurationViewModel = new ConfigurationViewModel(this);
             PlayerViewModel = new PlayerViewModel(this);
         }
+        public bool isLoadingFile = false;
         private async Task LoadJsonFileIfNotNull()
         {
-            ListOfQuestionPacks = new ObservableCollection<QuestionPackViewModel>();
             string path = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Labb3_HenrikVu\\ListOfActivePacks.json";
             if(File.Exists(path))
             {
-                string myJson = File.ReadAllText(path);
-                ListOfQuestionPacks = JsonSerializer.Deserialize<ObservableCollection<QuestionPackViewModel>>(myJson);
-                ActivePack = ListOfQuestionPacks.LastOrDefault();
-            }
-            else
-            {
+                isLoadingFile = true;
+                Debug.WriteLine("Json File Loading");
+                string myJson = await File.ReadAllTextAsync(path);
+                var hej = JsonSerializer.Deserialize<ObservableCollection<QuestionPackViewModel>>(myJson);
+                ListOfQuestionPacks = hej;
                 ActivePack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
-                ActivePack.Questions.Add(new Question("Sample Question"));
-                ListOfQuestionPacks.Add(ActivePack);
+                ActivePack = ListOfQuestionPacks.LastOrDefault();
+                SelectedQuestion = ActivePack.Questions.LastOrDefault();
+
+                Debug.WriteLine("Json File Loaded");
+                RaisePropertyChanged("SelectedQuestion");
+                RaisePropertyChanged("ActivePack");
+                RaisePropertyChanged("ListOfQuestionPacks");
+                isLoadingFile = false;
             }
-
-            SelectedQuestion = ActivePack.Questions.LastOrDefault();
-
-            RaisePropertyChanged("SelectedQuestion");
-            RaisePropertyChanged("ActivePack");
-            RaisePropertyChanged("ListOfQuestionPacks");
         }
         public void ToggleSwapActiveWindow()
         {

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace Labb3_HenrikVu.ViewModel
@@ -102,20 +103,13 @@ namespace Labb3_HenrikVu.ViewModel
         public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
+
             dispatchTimer = new DispatcherTimer();
             dispatchTimer.Interval = TimeSpan.FromSeconds(1);
             dispatchTimer.Tick += Timer_Tick;
 
             PlayQuestionsOnCommand = new DelegateCommand(PlayQuestions);
             SelectAnswerOnCommand = new DelegateCommand(SelectAnswer, CheckAnswers);
-
-            if(ActivePack.Questions.Count != 0)
-            {
-                RandomizeSelectedQuestions();
-            }
-            ResetButtonBooleans();
-            ResetTimer();
-            RaisePropertyChanged("ActivePack");
         }
         public void ResetButtonBooleans()
         {
@@ -125,11 +119,17 @@ namespace Labb3_HenrikVu.ViewModel
         }
         private bool CheckAnswers(object? arg)
         {
+            string tempString = string.Empty;
+            int answerIndex = 0;
             if(arg is string && waitForNextQuestion == false || Timesup)
             {
-                string tempString = (string)arg;
-                int answerIndex = RandomizedAnswerList.IndexOf(tempString);
                 int correctIndex = RandomizedAnswerList.IndexOf(SelectedQuestion.CorrectAnswer);
+                if(arg is string argString)
+                {
+                    string[] arrayString = argString.Split(" ^", 2);
+                    tempString = arrayString[0];
+                    answerIndex = int.Parse(arrayString[1]);
+                }
                 if(SelectedQuestion.CorrectAnswer == tempString && hasCorrectAnswer == false || Timesup)
                 {
                     hasCorrectAnswer = true;

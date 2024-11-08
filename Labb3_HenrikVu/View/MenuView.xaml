@@ -86,8 +86,7 @@
 
                 <MenuItem Header="_Import Question Pack"
                           InputGestureText="Ctrl+I"
-                          Icon="{fa:Icon fileimport}"
-                          Click="TestingClick"/>
+                          Icon="{fa:Icon fileimport}"/>
                 <Separator />
 
                 <MenuItem Header="E_xit"

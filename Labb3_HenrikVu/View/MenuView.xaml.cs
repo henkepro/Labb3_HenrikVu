@@ -51,10 +51,5 @@ namespace Labb3_HenrikVu.View
             EditWindow.IsEnabled = !EditWindow.IsEnabled;
             HiddenBoolean.IsChecked = !HiddenBoolean.IsChecked;
         }
-
-        private void TestingClick(object sender, RoutedEventArgs e)
-        {
-            //((APIQuestionsPackViewModel)DataContext).LoadJsonFileIfNotNull();
-        }
     }   
 }

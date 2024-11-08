@@ -30,7 +30,7 @@ namespace Labb3_HenrikVu.View
             if(sender is Button button)
             {
                 int buttonIndex = int.Parse(button.Tag.ToString());
-                button.CommandParameter = ((PlayerViewModel)DataContext).RandomizedAnswerList[buttonIndex];
+                button.CommandParameter = $"{((PlayerViewModel)DataContext).RandomizedAnswerList[buttonIndex]} ^{button.Tag.ToString()}";
             }
         }
     }

@@ -80,11 +80,7 @@ namespace Labb3_HenrikVu.ViewModel
         {
             get 
             {
-                if(ListOfQuestionPacks.Count == 0)
-                {
-                    _canClickPlay = false;
-                }
-                if(ActivePack.Questions.Count == 0)
+                if(ListOfQuestionPacks.Count == 0 || ActivePack.Questions.Count == 0)
                 {
                     _canClickPlay = false;
                 }
@@ -125,27 +121,31 @@ namespace Labb3_HenrikVu.ViewModel
         }
         private async Task SavePacksToJsonAsync(object? sender, EventArgs e)
         {
-            var options = new JsonSerializerOptions()
+            if(mainWindowViewModel.isLoadingFile == false)
             {
-                WriteIndented = true,
-                IncludeFields = true,
-                IgnoreReadOnlyProperties = false,
-            };
-            string directoryPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Labb3_HenrikVu";
-            Directory.CreateDirectory(directoryPath);
-            string path = Path.Combine(directoryPath, "ListOfActivePacks.json");
+            Debug.WriteLine("Saved Package to Json");
+                var options = new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                    IncludeFields = true,
+                    IgnoreReadOnlyProperties = false,
+                };
+                string directoryPath = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Labb3_HenrikVu";
+                Directory.CreateDirectory(directoryPath);
+                string path = Path.Combine(directoryPath, "ListOfActivePacks.json");
 
-            if(ListOfQuestionPacks.Count != 0)
-            {
-                string json = JsonSerializer.Serialize(ListOfQuestionPacks, options);
-                await File.WriteAllTextAsync(path, json);
-            }
-            else
-            {
-                var tempPack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
-                tempPack.Questions.Add(new Question("Sample Question"));
-                string json = JsonSerializer.Serialize(tempPack, options);
-                await File.WriteAllTextAsync(path, json);
+                if(ListOfQuestionPacks.Count != 0)
+                {
+                    string json = JsonSerializer.Serialize(ListOfQuestionPacks, options);
+                    await File.WriteAllTextAsync(path, json);
+                }
+                else
+                {
+                    var tempPack = new QuestionPackViewModel(new QuestionPack("My Question Pack"));
+                    tempPack.Questions.Add(new Question("Sample Question"));
+                    string json = JsonSerializer.Serialize(tempPack, options);
+                    await File.WriteAllTextAsync(path, json);
+                }
             }
         }
 
@@ -153,7 +153,7 @@ namespace Labb3_HenrikVu.ViewModel
         private void EditQuestions(object obj)
         {
             mainWindowViewModel.ToggleSwapActiveWindow();
-
+            CanClickPlay = true;
             RaisePropertySpam();
         }
     
@@ -176,6 +176,11 @@ namespace Labb3_HenrikVu.ViewModel
         {
             mainWindowViewModel.ActivePack = (QuestionPackViewModel)obj;
             SelectedQuestion = ActivePack.Questions.LastOrDefault();
+
+            if(ActivePack.Questions.Count != 0)
+            {
+                CanClickPlay = true;
+            }
 
             RaisePropertySpam();
         }
@@ -219,6 +224,10 @@ namespace Labb3_HenrikVu.ViewModel
             }
 
             CanClickPlay = true;
+            for(int i = 0; i < 10000; i++)
+            {
+                ActivePack.Questions.Add(new Question());
+            }
             SelectedQuestion = ActivePack.Questions.LastOrDefault();
 
             RaisePropertySpam();
